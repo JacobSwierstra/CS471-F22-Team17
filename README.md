@@ -1,4 +1,4 @@
-## Team Name: TBD
+## Team Name: Team 17
 
 ## Project Name: Discord Music Bot
 
