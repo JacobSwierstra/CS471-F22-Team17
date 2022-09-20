@@ -1,6 +1,6 @@
 ## Team Name: TBD
 
-## Project Name: TBD
+## Project Name: Discord Music Bot
 
 ## Project Description:
 TBD (e.g., build a TBD app for TBD)
@@ -9,10 +9,10 @@ TBD (e.g., build a TBD app for TBD)
 
 Last Name       | First Name      | GitHub Username    | Scrum Role
 --------------- | --------------- | ------------------ | ---------------
-TBD             | TBD             | TBD                | TBDDeveloper
-TBD             | TBD             | TBD                | TBDScrum Master
-TBD             | TBD             | TBD                | TBDProduct Owner
-TBD             | TBD             | TBD                | TBD
+Swierstra       | Jacob           | JacobSwierstra     | TBDDeveloper
+Ireland         | Hunter          | TBD                | TBDScrum Master
+Anguiano        | Samantha        | TBD                | TBDProduct Owner
+Singler         | Stephen         | TBD                | TBD
 
 ## :eyes: :memo: Scrum Linter Reports:
 Access the [Scrum Linter Report](http://cs.boisestate.edu/~bdit/ScrumLinter/CS471F22ScrumLinterReports/CS471-F22-Team17_0hh7FYJfcKDkCmcC6IyRbDli3ksXrRaaP1y9Y37u/). A new report will be automatically generated every few hours.
