@@ -11,7 +11,7 @@ Last Name       | First Name      | GitHub Username    | Scrum Role
 --------------- | --------------- | ------------------ | ---------------
 Swierstra       | Jacob           | JacobSwierstra     | TBDDeveloper
 Ireland         | Hunter          | TBD                | TBDScrum Master
-Anguiano        | Samantha        | TBD                | TBDProduct Owner
+Anguiano        | Samantha        | samantha555        | TBDProduct Owner
 Singler         | Stephen         | TBD                | TBD
 
 ## :eyes: :memo: Scrum Linter Reports:
