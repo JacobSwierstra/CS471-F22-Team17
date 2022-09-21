@@ -12,7 +12,7 @@ Last Name       | First Name      | GitHub Username    | Scrum Role
 --------------- | --------------- | ------------------ | ---------------
 Anguiano        | Samantha        | //samantha555        | Developer
 Ireland         | Hunter          | //hunterireland      | Developer
-Singler         | Stephen         | //StephenSingler     | Product Owner
+Singler         | Stephen         | StephenSingler     | Product Owner
 Swierstra       | Jacob           | JacobSwierstra     | Scrum Master
 
 ## :eyes: :memo: Scrum Linter Reports:
