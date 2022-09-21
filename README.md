@@ -12,7 +12,7 @@ Last Name       | First Name      | GitHub Username    | Scrum Role
 Swierstra       | Jacob           | JacobSwierstra     | TBDDeveloper
 Ireland         | Hunter          | hunterireland      | TBDScrum Master
 Anguiano        | Samantha        | samantha555        | TBDProduct Owner
-Singler         | Stephen         | TBD                | TBD
+Singler         | Stephen         | StephenSingler     | TBDDeveloper
 
 ## :eyes: :memo: Scrum Linter Reports:
 Access the [Scrum Linter Report](http://cs.boisestate.edu/~bdit/ScrumLinter/CS471F22ScrumLinterReports/CS471-F22-Team17_0hh7FYJfcKDkCmcC6IyRbDli3ksXrRaaP1y9Y37u/). A new report will be automatically generated every few hours.
