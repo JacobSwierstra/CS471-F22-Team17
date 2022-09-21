@@ -10,7 +10,7 @@ TBD (e.g., build a TBD app for TBD)
 Last Name       | First Name      | GitHub Username    | Scrum Role
 --------------- | --------------- | ------------------ | ---------------
 Swierstra       | Jacob           | JacobSwierstra     | TBDDeveloper
-Ireland         | Hunter          | TBD                | TBDScrum Master
+Ireland         | Hunter          | hunterireland      | TBDScrum Master
 Anguiano        | Samantha        | samantha555        | TBDProduct Owner
 Singler         | Stephen         | TBD                | TBD
 
