@@ -10,9 +10,9 @@ TBD (e.g., build a TBD app for TBD)
 Last Name       | First Name      | GitHub Username    | Scrum Role
 --------------- | --------------- | ------------------ | ---------------
 Swierstra       | Jacob           | JacobSwierstra     | Scrum Master
-Ireland         | Hunter          | hunterireland      | Developer
-Anguiano        | Samantha        | samantha555        | Developer
-Singler         | Stephen         | StephenSingler     | Product Owner
+Ireland         | Hunter          | //hunterireland      | Developer
+Anguiano        | Samantha        | //samantha555        | Developer
+Singler         | Stephen         | //StephenSingler     | Product Owner
 
 ## :eyes: :memo: Scrum Linter Reports:
 Access the [Scrum Linter Report](http://cs.boisestate.edu/~bdit/ScrumLinter/CS471F22ScrumLinterReports/CS471-F22-Team17_0hh7FYJfcKDkCmcC6IyRbDli3ksXrRaaP1y9Y37u/). A new report will be automatically generated every few hours.
