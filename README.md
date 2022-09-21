@@ -3,7 +3,8 @@
 ## Project Name: Discord Music Bot
 
 ## Project Description:
-TBD (e.g., build a TBD app for TBD)
+A discord bot that joins your server and plays music
+(e.g., build a TBD app for TBD)
 
 ## Team Members:
 
