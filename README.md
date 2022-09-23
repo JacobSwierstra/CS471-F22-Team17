@@ -10,7 +10,7 @@ A discord bot that joins your server and plays music
 
 Last Name       | First Name      | GitHub Username    | Scrum Role
 --------------- | --------------- | ------------------ | ---------------
-Anguiano        | Samantha        | //samantha555        | Developer
+Anguiano        | Samantha        | samantha555        | Developer
 Ireland         | Hunter          | hunterireland      | Developer
 Singler         | Stephen         | StephenSingler     | Product Owner
 Swierstra       | Jacob           | JacobSwierstra     | Scrum Master
