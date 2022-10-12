@@ -40,10 +40,10 @@ client.on('message', async message => {
     // join command
     if (message.content.startsWith(`${prefix}join`)) {
         const voiceChannel = message.member.voice.channel;
-        //if (!voiceChannel && (message.content.startsWith(prefix))){
-        //    message.channel.send("You need to be in a voice channel to play music!");
-        //    return;
-        //}
+        if (!voiceChannel && (message.content.startsWith(prefix))){
+           message.channel.send("You need to be in a voice channel to play music!");
+           return;
+        }
         try {
             var connection = await voiceChannel.join();
             return;
