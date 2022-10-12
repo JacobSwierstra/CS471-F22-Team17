@@ -52,4 +52,21 @@ client.on('message', async message => {
             return message.channel.send(err);
         }
     }
+
+    // // leave command
+    // if (message.content.startsWith(`${prefix}leave`)) {
+    //     const voiceChannel = message.member.voice.channel;
+    //     if (!voiceChannel && (message.content.startsWith(prefix))){
+    //        message.channel.send("You need to be in a voice channel to give me commands!");
+    //        return;
+    //     }
+    //     try {
+    //         message.channel.send("Okay! See you later");
+    //         var connection = voiceChannel.leave();
+    //         return;
+    //     } catch (err) {
+    //         console.log(err);
+    //         return message.channel.send(err);
+    //     }
+    // }
 });
