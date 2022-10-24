@@ -140,5 +140,16 @@ function play(guild, song) {
       queue.delete(guild.id);
       return;
     }
+
+    // Plays song specified by url
+    const dispatcher = serverQueue.connection
+    .play(ytdl(song.url))
+    .on("finish", () => {
+      serverQueue.songs.shift();
+      play(guild, serverQueue.songs[0]);
+    })
+    .on("error", error => console.error(error));
+  dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+  serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 }
 
