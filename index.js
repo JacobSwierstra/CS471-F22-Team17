@@ -91,4 +91,40 @@ client.on('message', async message => {
     // }
 });
 
+async function addSongs(message, serverQueue) {
+    const voiceChannel = message.member.voice.channel;
+    const args = message.content.split(" ");
+    const songInfo = await ytdl.getInfo(args[1]);
+    const song = {
+      title: songInfo.videoDetails.title,
+      url: songInfo.videoDetails.video_url
+    };
+
+    if (!serverQueue) {
+      const queueContract = {
+        textChannel: message.channel,
+        voiceChannel: voiceChannel,
+        connection: null,
+        songs: [],
+        volume: 5,
+        playing: true
+      };
+  
+      queue.set(message.guild.id, queueContract);
+  
+      queueContract.songs.push(song);
+  
+      try {
+        queueContract.connection = connection;
+        play(message.guild, queueContract.songs[0]);
+      } catch (err) {
+        console.log(err);
+        queue.delete(message.guild.id);
+        return message.channel.send(err);
+      }
+    } else {
+      serverQueue.songs.push(song);
+      return message.channel.send(`${song.title} has been added to the queue!`);
+    }
+}
 
