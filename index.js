@@ -65,11 +65,11 @@ client.on('message', async message => {
            message.channel.send("You need to be in a voice channel to give me commands!");
            return;
         }
-    // const permissions = voiceChannel.permissionsFor(message.client.user);
-    //     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
-    //         message.channel.send("You need the permissions to send me commands!");
-    //         return;
-    //     }
+    const permissions = voiceChannel.permissionsFor(message.client.user);
+        if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
+            message.channel.send("You need the permissions to send me commands!");
+            return;
+        }
         try {
             message.channel.send("Okay! See you later");
             var connection = voiceChannel.leave();
