@@ -131,7 +131,6 @@ async function addSongs(message, serverQueue) {
     }
 }
 
-/* Needs implementation */
 function play(guild, song) {
     const serverQueue = queue.get(guild.id);
     // checks if song is empty
