@@ -95,11 +95,13 @@ async function addSongs(message, serverQueue) {
     const voiceChannel = message.member.voice.channel;
     const args = message.content.split(" ");
     const songInfo = await ytdl.getInfo(args[1]);
+    // creates song object with title and url
     const song = {
       title: songInfo.videoDetails.title,
       url: songInfo.videoDetails.video_url
     };
 
+    // creates queue
     if (!serverQueue) {
       const queueContract = {
         textChannel: message.channel,
@@ -115,6 +117,7 @@ async function addSongs(message, serverQueue) {
       queueContract.songs.push(song);
   
       try {
+        // attemps to play song
         queueContract.connection = connection;
         play(message.guild, queueContract.songs[0]);
       } catch (err) {
@@ -126,5 +129,10 @@ async function addSongs(message, serverQueue) {
       serverQueue.songs.push(song);
       return message.channel.send(`${song.title} has been added to the queue!`);
     }
+}
+
+/* Needs implementation */
+function play(guild, song) {
+
 }
 
