@@ -58,20 +58,25 @@ client.on('message', async message => {
         }
     }
 
-    // // leave command
-    // if (message.content.startsWith(`${prefix}leave`)) {
-    //     const voiceChannel = message.member.voice.channel;
-    //     if (!voiceChannel && (message.content.startsWith(prefix))){
-    //        message.channel.send("You need to be in a voice channel to give me commands!");
-    //        return;
-    //     }
-    //     try {
-    //         message.channel.send("Okay! See you later");
-    //         var connection = voiceChannel.leave();
+    // leave command
+    if (message.content.startsWith(`${prefix}leave`)) {
+        const voiceChannel = message.member.voice.channel;
+        if (!voiceChannel && (message.content.startsWith(prefix))){
+           message.channel.send("You need to be in a voice channel to give me commands!");
+           return;
+        }
+    // const permissions = voiceChannel.permissionsFor(message.client.user);
+    //     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
+    //         message.channel.send("You need the permissions to send me commands!");
     //         return;
-    //     } catch (err) {
-    //         console.log(err);
-    //         return message.channel.send(err);
     //     }
-    // }
+        try {
+            message.channel.send("Okay! See you later");
+            var connection = voiceChannel.leave();
+            return;
+        } catch (err) {
+            console.log(err);
+            return message.channel.send(err);
+        }
+    }
 });
