@@ -4,6 +4,7 @@
     "discord-player": "^5.3.2",
     "discord.js": "^12.5.3",
     "ffmpeg": "^0.0.4",
+    "ffmpeg-static": "^5.1.0",
     "fluent-ffmpeg": "^2.1.2",
     "ytdl-core": "^4.11.2"
   }

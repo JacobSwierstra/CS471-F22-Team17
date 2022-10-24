@@ -10,6 +10,10 @@ const ytdl = require("ytdl-core");
 const client = new Discord.Client();
 client.login(token);
 
+// Queue for songs
+const queue = new Map();
+var connection;
+
 // Basic listeners
 client.once('ready', () => {
     console.log('Ready!');
@@ -50,7 +54,7 @@ client.on('message', async message => {
             return;
         }
         try {
-            var connection = await voiceChannel.join();
+            connection = await voiceChannel.join();
             return;
         } catch (err) {
             console.log(err);
@@ -58,7 +62,18 @@ client.on('message', async message => {
         }
     }
 
-    // // leave command
+    const serverQueue = queue.get(message.guild.id);
+    if(message.content.startsWith(`${prefix}play`)) {
+        // checks to see if bot has joined the messenger's voice channel
+        if (!client.voice.connections.find(i => i.channel.id === message.member.voice.channel.id)) {
+            message.channel.send("Please run !join to allow me in your voice channel.");
+            return;
+        }
+       addSongs(message, serverQueue);
+       return;
+    }
+
+    // //leave command
     // if (message.content.startsWith(`${prefix}leave`)) {
     //     const voiceChannel = message.member.voice.channel;
     //     if (!voiceChannel && (message.content.startsWith(prefix))){
@@ -67,7 +82,7 @@ client.on('message', async message => {
     //     }
     //     try {
     //         message.channel.send("Okay! See you later");
-    //         var connection = voiceChannel.leave();
+    //         connection = voiceChannel.leave();
     //         return;
     //     } catch (err) {
     //         console.log(err);
@@ -75,3 +90,5 @@ client.on('message', async message => {
     //     }
     // }
 });
+
+
