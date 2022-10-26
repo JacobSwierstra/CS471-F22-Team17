@@ -13,6 +13,7 @@ client.login(token);
 // Queue for songs
 const queue = new Map();
 var connection;
+var playing;
 
 // Basic listeners
 client.once('ready', () => {
@@ -66,7 +67,11 @@ client.on('message', async message => {
     if(message.content.startsWith(`${prefix}play`)) {
         // checks to see if bot has joined the messenger's voice channel
         if (!client.voice.connections.find(i => i.channel.id === message.member.voice.channel.id)) {
-            message.channel.send("Please run !join to allow me in your voice channel.");
+            if (playing) {
+              message.channel.send("I can only play music in one channel at a time!")
+            } else {
+              message.channel.send("Please run !join to allow me in your voice channel.");
+            }
             return;
         }
        addSongs(message, serverQueue);
@@ -148,6 +153,7 @@ function play(guild, song) {
       play(guild, serverQueue.songs[0]);
     })
     .on("error", error => console.error(error));
+  playing = true;
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
   serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 }
