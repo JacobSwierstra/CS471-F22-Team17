@@ -79,21 +79,22 @@ client.on('message', async message => {
     }
 
     // //leave command
-    // if (message.content.startsWith(`${prefix}leave`)) {
-    //     const voiceChannel = message.member.voice.channel;
-    //     if (!voiceChannel && (message.content.startsWith(prefix))){
-    //        message.channel.send("You need to be in a voice channel to give me commands!");
-    //        return;
-    //     }
-    //     try {
-    //         message.channel.send("Okay! See you later");
-    //         connection = voiceChannel.leave();
-    //         return;
-    //     } catch (err) {
-    //         console.log(err);
-    //         return message.channel.send(err);
-    //     }
-    // }
+    if (message.content.startsWith(`${prefix}leave`)) {
+        const voiceChannel = message.member.voice.channel;
+        if (!voiceChannel && (message.content.startsWith(prefix))){
+           message.channel.send("You need to be in a voice channel to give me commands!");
+           return;
+        }
+        try {
+            message.channel.send("Okay! See you later");
+            connection = voiceChannel.leave();
+            return;
+        } catch (err) {
+            message.channel.send("ERROR: Please try again");
+            console.log(err);
+            return message.channel.send(err);
+        }
+    }
 });
 
 async function addSongs(message, serverQueue) {
