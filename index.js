@@ -91,8 +91,12 @@ client.on('message', async message => {
         try {
             message.channel.send("Okay! See you later");
             connection = voiceChannel.leave();
+
+            queue.destroy();
+            
             return;
         } catch (err) {
+            message.channel.send("ERROR: Please try again");
             console.log(err);
             return message.channel.send(err);
         }
