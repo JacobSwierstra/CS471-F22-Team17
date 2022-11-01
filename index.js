@@ -61,6 +61,9 @@ client.on('message', async message => {
             console.log(err);
             return message.channel.send(err);
         }
+    } else if (message.content.startsWith(`${prefix}pause`)) {
+      pause(message.guild, message);
+      return;
     }
 
     const serverQueue = queue.get(message.guild.id);
@@ -78,16 +81,18 @@ client.on('message', async message => {
        return;
     }
 
-    // //leave command
+
+    //leave command
     if (message.content.startsWith(`${prefix}leave`)) {
         const voiceChannel = message.member.voice.channel;
-        // if (!voiceChannel && (message.content.startsWith(prefix))){
-        //    message.channel.send("You need to be in a voice channel to give me commands!");
-        //    return;
-        // }
+        if (!voiceChannel && (message.content.startsWith(prefix))){
+           message.channel.send("You need to be in a voice channel to give me commands!");
+           return;
+        }
         try {
             message.channel.send("Okay! See you later");
             connection = voiceChannel.leave();
+            queue.destroy();
             return;
         } catch (err) {
             message.channel.send("ERROR: Please try again");
@@ -157,5 +162,18 @@ function play(guild, song) {
   playing = true;
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
   serverQueue.textChannel.send(`Start playing: **${song.title}**`);
+}
+
+function pause(guild, message) {
+    const serverQueue = queue.get(guild.id);
+    if (!serverQueue) {
+        return message.channel.send("There is no song playing!");
+    } else {
+      const dispatcher = serverQueue.connection.dispatcher;
+      if (!dispatcher.paused) {
+        dispatcher.pause();
+        return message.channel.send("Music paused!");
+      }
+    }
 }
 
