@@ -81,6 +81,7 @@ client.on('message', async message => {
        return;
     }
 
+
     //leave command
     if (message.content.startsWith(`${prefix}leave`)) {
         const voiceChannel = message.member.voice.channel;
@@ -91,9 +92,7 @@ client.on('message', async message => {
         try {
             message.channel.send("Okay! See you later");
             connection = voiceChannel.leave();
-
             queue.destroy();
-            
             return;
         } catch (err) {
             message.channel.send("ERROR: Please try again");
