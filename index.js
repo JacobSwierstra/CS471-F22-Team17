@@ -61,9 +61,21 @@ client.on('message', async message => {
             console.log(err);
             return message.channel.send(err);
         }
-    } else if (message.content.startsWith(`${prefix}pause`)) {
-      pause(message.guild, message);
-      return;
+    } 
+    
+    //pause command
+    if (message.content.startsWith(`${prefix}pause`)) {
+      const voiceChannel = message.member.voice.channel;
+      if (!voiceChannel && (message.content.startsWith(prefix))){
+         message.channel.send("You need to be in a voice channel to play/pause music!");
+         return;
+      } else if (!connection) {
+        message.channel.send("I need to be in a voice channel to play/pause music!");
+        return;
+      } else {
+        pause(message.guild, message);
+        return;
+      }
     }
 
     const serverQueue = queue.get(message.guild.id);
