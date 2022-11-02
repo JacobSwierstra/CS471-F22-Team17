@@ -66,10 +66,11 @@ client.on('message', async message => {
     //pause command
     if (message.content.startsWith(`${prefix}pause`)) {
       const voiceChannel = message.member.voice.channel;
+      // test if user is in voice channel
       if (!voiceChannel && (message.content.startsWith(prefix))){
          message.channel.send("You need to be in a voice channel to play/pause music!");
          return;
-      } else if (!connection) {
+      } else if (!connection) { // test if bot is in voice channel
         message.channel.send("I need to be in a voice channel to play/pause music!");
         return;
       } else {
@@ -176,8 +177,10 @@ function play(guild, song) {
   serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 }
 
+//pause function
 function pause(guild, message) {
     const serverQueue = queue.get(guild.id);
+    //emptyu queue
     if (!serverQueue) {
         return message.channel.send("There is no song playing!");
     } else {
