@@ -105,7 +105,7 @@ client.on('message', async message => {
         try {
             message.channel.send("Okay! See you later");
             connection = voiceChannel.leave();
-            queue.destroy();
+            queue.delete(message.guild.id);
             return;
         } catch (err) {
             message.channel.send("ERROR: Please try again");
