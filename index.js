@@ -79,6 +79,38 @@ client.on('message', async message => {
       }
     }
 
+
+       //skip command
+       if (message.content.startsWith(`${prefix}skip`)) {
+        const voiceChannel = message.member.voice.channel;
+        if (!voiceChannel && (message.content.startsWith(prefix))){
+           message.channel.send("You need to be in a voice channel to play/pause music!");
+           return;
+        } else if (!connection) {
+          message.channel.send("I need to be in a voice channel to skip music!");
+          return;
+        } else {
+          const serverQueue = queue.get(message.guild.id);
+          if(!serverQueue){
+            message.channel.send("There is no song playing!");
+            return;
+          } else if(!serverQueue.songs[1]){
+            message.channel.send("There are no more songs in the queue please use leave command") ;
+            return;
+          } else {
+            try{
+              skip(message.guild, serverQueue);
+              message.channel.send("current song skipped!");
+              return;
+            }catch(err) {
+                console.log(err);
+                return message.channel.send(err);
+            }
+          }
+        }
+      }
+
+
     const serverQueue = queue.get(message.guild.id);
     if(message.content.startsWith(`${prefix}play`)) {
         // checks to see if bot has joined the messenger's voice channel
@@ -105,7 +137,13 @@ client.on('message', async message => {
         try {
             message.channel.send("Okay! See you later");
             connection = voiceChannel.leave();
-            queue.delete(message.guild.id);
+            ////queue.delete(message.guild.id); delete i think
+            // const serverQueue = queue.get(guild.id);
+            // if(serverQueue){
+            //   const dispatcher = serverQueue.connection.dispatcher;
+            //   dispatcher.end();
+            //   serverQueue.delete(guild.id);
+            // }
             return;
         } catch (err) {
             message.channel.send("ERROR: Please try again");
@@ -113,6 +151,7 @@ client.on('message', async message => {
             return message.channel.send(err);
         }
     }
+
 });
 
 async function addSongs(message, serverQueue) {
@@ -177,6 +216,16 @@ function play(guild, song) {
   serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 }
 
+//skip command
+function skip(guild, serverQueue) {
+  if (!serverQueue) {
+    return;
+  } else {
+    serverQueue.connection.dispatcher.end();
+    return;
+  } 
+}
+
 //pause function
 function pause(guild, message) {
     const serverQueue = queue.get(guild.id);
@@ -191,4 +240,3 @@ function pause(guild, message) {
       }
     }
 }
-
