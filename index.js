@@ -135,15 +135,8 @@ client.on('message', async message => {
            return;
         }
         try {
+            leaving(serverQueue);
             message.channel.send("Okay! See you later");
-            connection = voiceChannel.leave();
-            ////queue.delete(message.guild.id); delete i think
-            // const serverQueue = queue.get(guild.id);
-            // if(serverQueue){
-            //   const dispatcher = serverQueue.connection.dispatcher;
-            //   dispatcher.end();
-            //   serverQueue.delete(guild.id);
-            // }
             return;
         } catch (err) {
             message.channel.send("ERROR: Please try again");
@@ -153,6 +146,16 @@ client.on('message', async message => {
     }
 
 });
+
+
+function leaving( serverQueue ){
+    //connection = voiceChannel.leave();
+    if(serverQueue){
+      serverQueue.songs = null;
+      const dispatcher = serverQueue.connection.dispatcher;
+      dispatcher.end();
+    }
+}
 
 async function addSongs(message, serverQueue) {
     const voiceChannel = message.member.voice.channel;
@@ -165,7 +168,7 @@ async function addSongs(message, serverQueue) {
     };
 
     // creates queue
-    if (!serverQueue) {
+    if (!serverQueue || serverQueue.songs == null) {
       const queueContract = {
         textChannel: message.channel,
         voiceChannel: voiceChannel,
@@ -198,17 +201,19 @@ function play(guild, song) {
     const serverQueue = queue.get(guild.id);
     // checks if song is empty
     if (!song) {
-      serverQueue.voiceChannel.leave();
+      //serverQueue.voiceChannel.leave();
       queue.delete(guild.id);
       return;
     }
 
     // Plays song specified by url
     const dispatcher = serverQueue.connection
-    .play(ytdl(song.url), {filter: "audioonly", quality: "highestaudio" , dlChunkSize : 1024 * 1024})
+    .play(ytdl(song.url), {filter: "audioonly", quality: "lowestaudio"})
     .on("finish", () => {
-      serverQueue.songs.shift();
-      play(guild, serverQueue.songs[0]);
+      if(serverQueue.songs != null){
+        serverQueue.songs.shift();
+        play(guild, serverQueue.songs[0]);
+      }
     })
     .on("error", error => console.error(error));
   playing = true;
@@ -218,10 +223,11 @@ function play(guild, song) {
 
 //skip command
 function skip(guild, serverQueue) {
+  const dispatcher = serverQueue.connection.dispatcher;
   if (!serverQueue) {
     return;
   } else {
-    serverQueue.connection.dispatcher.end();
+    dispatcher.end();
     return;
   } 
 }
