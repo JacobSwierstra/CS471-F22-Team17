@@ -135,9 +135,14 @@ client.on('message', async message => {
            return;
         }
         try {
-            leaving(serverQueue);
-            message.channel.send("Okay! See you later");
-            return;
+            if(connection){
+              leaving(serverQueue);
+              message.channel.send("Okay! See you later");
+              connection = voiceChannel.leave();
+              return;
+            } else {
+              message.channel.send("I am not currently in a voice channel");
+            }
         } catch (err) {
             message.channel.send("ERROR: Please try again");
             console.log(err);
@@ -149,10 +154,9 @@ client.on('message', async message => {
 
 
 function leaving( serverQueue ){
-    //connection = voiceChannel.leave();
     if(serverQueue){
       serverQueue.songs = null;
-      const dispatcher = serverQueue.connection.dispatcher;
+      let dispatcher = serverQueue.connection.dispatcher;
       dispatcher.end();
     }
 }
@@ -208,7 +212,7 @@ function play(guild, song) {
 
     // Plays song specified by url
     const dispatcher = serverQueue.connection
-    .play(ytdl(song.url), {filter: "audioonly", quality: "lowestaudio", dlChunkSize : 1024 * 1024})
+    .play(ytdl(song.url), {filter: "audioonly", quality: "lowestaudio", dlChunkSize: 1024 * 1024, highWaterMark: 1 << 25})
     .on("finish", () => {
       if(serverQueue.songs != null){
         serverQueue.songs.shift();
