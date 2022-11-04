@@ -99,7 +99,7 @@ client.on('message', async message => {
             return;
           } else {
             try{
-              skip(message.guild, serverQueue);
+              skip(serverQueue);
               message.channel.send("current song skipped!");
               return;
             }catch(err) {
@@ -222,9 +222,9 @@ function play(guild, song) {
 }
 
 //skip command
-function skip(guild, serverQueue) {
+function skip(serverQueue) {
   const dispatcher = serverQueue.connection.dispatcher;
-  if (!serverQueue) {
+  if (!serverQueue || serverQueue.songs == null) {
     return;
   } else {
     dispatcher.end();
