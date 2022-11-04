@@ -113,6 +113,12 @@ client.on('message', async message => {
             return message.channel.send(err);
         }
     }
+
+    // clear command
+    if (message.content.startsWith(`${prefix}clear`)) {
+      serverQueue.songs = [];
+      message.channel.send("Queue cleared!");
+    }
 });
 
 async function addSongs(message, serverQueue) {
@@ -161,6 +167,7 @@ function play(guild, song) {
     if (!song) {
       serverQueue.voiceChannel.leave();
       queue.delete(guild.id);
+      playing = false;
       return;
     }
 
@@ -187,6 +194,7 @@ function pause(guild, message) {
       const dispatcher = serverQueue.connection.dispatcher;
       if (!dispatcher.paused) {
         dispatcher.pause();
+        playing = false;
         return message.channel.send("Music paused!");
       }
     }
