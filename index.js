@@ -152,8 +152,12 @@ client.on('message', async message => {
 
     // clear command
     if (message.content.startsWith(`${prefix}clear`)) {
-      serverQueue.songs = [];
-      message.channel.send("Queue cleared!");
+      if (!serverQueue || !serverQueue.songs || serverQueue.songs.length < 2) {
+        message.channel.send("Queue is already empty!");
+      } else {
+        serverQueue.songs = [];
+        message.channel.send("Queue cleared!");
+      }
     }
 
 });
@@ -164,6 +168,7 @@ function leaving( serverQueue ){
       serverQueue.songs = null;
       let dispatcher = serverQueue.connection.dispatcher;
       dispatcher.end();
+      playing = false;
     }
 }
 
