@@ -196,6 +196,7 @@ async function addSongs(message, serverQueue) {
         return;
     }
     var songInfo;
+    /* !playurl or !play url */
     if(args.length == 1) {
         songInfo = await ytdl.getInfo(args[0].substring(5));
     } else {
