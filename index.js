@@ -160,6 +160,21 @@ client.on('message', async message => {
         }
     }
 
+    // queue command
+    if (message.content.startsWith(`${prefix}queue`)) {
+        const voiceChannel = message.member.voice.channel;
+        if (!voiceChannel && (message.content.startsWith(prefix))) {
+            message.channel.send("You need to be in a voice channel to give me commands!");
+            return;
+        // } else if (!connection) {
+        //     message.channel.send("I need to be in a voice channel to show you the queue!");
+        //     return;
+        } else if (serverQueue == null || serverQueue.songs == null || serverQueue.songs.length < 2) {
+            /* prints if any elements of the serverQueue are null or songs only contains the current playing song */
+            message.channel.send("Queue is empty! Add more songs!");
+        }
+    }
+
 });
 
 
@@ -224,7 +239,7 @@ function play(guild, song) {
 
     // Plays song specified by url
     const dispatcher = serverQueue.connection
-        .play(ytdl(song.url), { filter: "audioonly"})
+        .play(ytdl(song.url), { filter: "audioonly" })
         .on("finish", () => {
             if (serverQueue.songs != null) {
                 serverQueue.songs.shift();
