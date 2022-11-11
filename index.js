@@ -190,6 +190,11 @@ function leaving(serverQueue) {
 async function addSongs(message, serverQueue) {
     const voiceChannel = message.member.voice.channel;
     const args = message.content.split(" ");
+    /* only "!play" to resume */
+    if (args.length == 1 && args[0] == "!play") {
+        resume(serverQueue, message);
+        return;
+    }
     const songInfo = await ytdl.getInfo(args[1]);
     // creates song object with title and url
     const song = {
@@ -225,6 +230,22 @@ async function addSongs(message, serverQueue) {
         serverQueue.songs.push(song);
         return message.channel.send(`${song.title} has been added to the queue!`);
     }
+}
+
+function resume(serverQueue, message) {
+    if (serverQueue == null || serverQueue.songs == null) {
+        return message.channel.send("No music yet so add some!");
+    }
+    const dispatcher = serverQueue.connection.dispatcher;
+    if(playing) {
+        return message.channel.send("Song is already resumed!");
+    }
+    /* resume() is buggy so applied a dirty fix to make it work as expected */
+    dispatcher.resume();
+    dispatcher.pause();
+    dispatcher.resume();
+    playing = true;
+    return message.channel.send("Resuming!");
 }
 
 function play(guild, song) {
