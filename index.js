@@ -195,7 +195,14 @@ async function addSongs(message, serverQueue) {
         resume(serverQueue, message);
         return;
     }
-    const songInfo = await ytdl.getInfo(args[1]);
+    var songInfo;
+    /* !playurl or !play url */
+    if(args.length == 1) {
+        songInfo = await ytdl.getInfo(args[0].substring(5));
+    } else {
+        songInfo = await ytdl.getInfo(args[1]);
+    }
+
     // creates song object with title and url
     const song = {
         title: songInfo.videoDetails.title,
