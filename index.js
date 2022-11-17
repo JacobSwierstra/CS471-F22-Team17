@@ -166,12 +166,12 @@ client.on('message', async message => {
         if (!voiceChannel && (message.content.startsWith(prefix))) {
             message.channel.send("You need to be in a voice channel to give me commands!");
             return;
+        } else if (!connection) {
+            message.channel.send("I need to be in a voice channel to show you the queue!");
+            return;
         } else if (serverQueue == null || serverQueue.songs == null || serverQueue.songs.length < 2) {
             /* prints if any elements of the serverQueue are null or songs only contains the current playing song */
             message.channel.send("Queue is empty! Add more songs!");
-        } else if (!connection) {
-          message.channel.send("I need to be in a voice channel to show you the queue!");
-          return;
         } else {
           printQueue(message.guild, message);
         }
