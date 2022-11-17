@@ -177,6 +177,17 @@ client.on('message', async message => {
         }
     }
 
+     // shuffle command
+     if (message.content.startsWith(`${prefix}shuffle`)) {
+        const voiceChannel = message.member.voice.channel;
+        if (!voiceChannel && (message.content.startsWith(prefix))) {
+            message.channel.send("You need to be in a voice channel to give me commands!");
+            return;
+        } else if (!connection) {
+            message.channel.send("I need to be in a voice channel to shuffle!");
+            return;
+        }
+     }
 });
 
 
