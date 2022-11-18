@@ -191,6 +191,21 @@ client.on('message', async message => {
             message.channel.send("Queue is empty! No songs to shuffle!");
         }
      }
+
+     // loop
+     if (message.content.startsWith(`${prefix}loop`)) {
+        const voiceChannel = message.member.voice.channel;
+        if (!voiceChannel && (message.content.startsWith(prefix))) {
+            message.channel.send("You need to be in a voice channel to give me commands!");
+            return;
+        } else if (!connection) {
+            message.channel.send("I need to be in a voice channel to loop!");
+            return;
+        } else if (serverQueue == null || serverQueue.songs == null || serverQueue.songs.length == 0) {
+            /* prints if any elements of the serverQueue are null or no songs haven't been added */
+            message.channel.send("Queue is empty! No songs to loop!");
+        }
+     }
 });
 
 
