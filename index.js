@@ -14,6 +14,7 @@ client.login(token);
 const queue = new Map();
 var connection;
 var playing;
+var backlog = [];
 
 // Basic listeners
 client.once('ready', () => {
@@ -206,6 +207,22 @@ client.on('message', async message => {
             message.channel.send("Queue is empty! No songs to loop!");
         }
      }
+
+    // back
+    if (message.content.startsWith(`${prefix}back`)) {
+        const voiceChannel = message.member.voice.channel;
+        if (!voiceChannel) {
+          message.channel.send("You need to be in a voice channel to go back!");
+          return;
+        }
+        if (!connection) {
+          message.channel.send("I need to be in a voice channel to go back!");
+          return;
+        }
+        if (backlog.length > 0) {
+            play(message.guild, backlog.pop());
+        }
+      }
 });
 
 
@@ -300,6 +317,7 @@ function play(guild, song) {
     const dispatcher = serverQueue.connection
         .play(ytdl(song.url), { filter: "audioonly" })
         .on("finish", () => {
+            backlog.push(song);
             if (serverQueue.songs != null) {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
