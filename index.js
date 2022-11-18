@@ -186,6 +186,9 @@ client.on('message', async message => {
         } else if (!connection) {
             message.channel.send("I need to be in a voice channel to shuffle!");
             return;
+        } else if (serverQueue == null || serverQueue.songs == null || serverQueue.songs.length < 2) {
+            /* prints if any elements of the serverQueue are null or songs only contains the current playing song */
+            message.channel.send("Queue is empty! No songs to shuffle!");
         }
      }
 });
