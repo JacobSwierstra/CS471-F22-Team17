@@ -221,6 +221,9 @@ client.on('message', async message => {
         }
         if (backlog.length > 0) {
             play(message.guild, backlog.pop());
+        } else {
+            message.channel.send("There are no previous songs to be played!");
+            return;
         }
       }
 });
