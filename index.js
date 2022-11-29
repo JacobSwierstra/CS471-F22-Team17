@@ -146,10 +146,22 @@ client.on('message', async message => {
         if (!client.voice.connections.find(i => i.channel.id === message.member.voice.channel.id)) {
             if (playing) {
                 message.channel.send("I can only play music in one channel at a time!")
+                return;
             } else {
-                message.channel.send("Please run !join to allow me in your voice channel.");
+                const voiceChannel = message.member.voice.channel;
+                const permissions = voiceChannel.permissionsFor(message.client.user);
+                if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
+                    message.channel.send("I need the permissions to join and speak in your voice channel!");
+                    return;
+                }
+                try {
+                    connection = await voiceChannel.join();
+                } catch (err) {
+                    console.log(err);
+                    return message.channel.send(err);
+                }
             }
-            return;
+            
         }
         addSongs(message, serverQueue);
         return;
