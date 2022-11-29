@@ -93,10 +93,38 @@ client.on('message', async message => {
         } else {
             const serverQueue = queue.get(message.guild.id);
             if (!serverQueue) {
-                message.channel.send("There is no song playing!");
+                message.channel.send("skip cannot occur no available songs to skip to Goodbye!");
+                try {
+                    if (connection) {
+                        leaving(serverQueue);
+                        message.channel.send("Okay! See you later");
+                        connection = voiceChannel.leave();
+                        return;
+                    } else {
+                        message.channel.send("I am not currently in a voice channel");
+                    }
+                } catch (err) {
+                    message.channel.send("ERROR: Please try again");
+                    console.log(err);
+                    return message.channel.send(err);
+                }
                 return;
             } else if (!serverQueue.songs[1]) {
-                message.channel.send("There are no more songs in the queue please use leave command");
+                message.channel.send("skip cannot occur no available songs to skip to. Goodbye!");
+                try {
+                    if (connection) {
+                        leaving(serverQueue);
+                        message.channel.send("Okay! See you later");
+                        connection = voiceChannel.leave();
+                        return;
+                    } else {
+                        message.channel.send("I am not currently in a voice channel");
+                    }
+                } catch (err) {
+                    message.channel.send("ERROR: Please try again");
+                    console.log(err);
+                    return message.channel.send(err);
+                }
                 return;
             } else {
                 try {
@@ -339,6 +367,12 @@ function skip(serverQueue) {
         return;
     } else {
         dispatcher.end();
+        dispatcher.resume();
+        dispatcher.pause();
+        if (!dispatcher.paused) {
+            dispatcher.pause();
+            playing = false;
+        }
         return;
     }
 }
