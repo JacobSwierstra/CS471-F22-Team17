@@ -93,10 +93,38 @@ client.on('message', async message => {
         } else {
             const serverQueue = queue.get(message.guild.id);
             if (!serverQueue) {
-                message.channel.send("There is no song playing!");
+                message.channel.send("skip cannot occur no available songs to skip to Goodbye!");
+                try {
+                    if (connection) {
+                        leaving(serverQueue);
+                        message.channel.send("Okay! See you later");
+                        connection = voiceChannel.leave();
+                        return;
+                    } else {
+                        message.channel.send("I am not currently in a voice channel");
+                    }
+                } catch (err) {
+                    message.channel.send("ERROR: Please try again");
+                    console.log(err);
+                    return message.channel.send(err);
+                }
                 return;
             } else if (!serverQueue.songs[1]) {
-                message.channel.send("There are no more songs in the queue please use leave command");
+                message.channel.send("skip cannot occur no available songs to skip to. Goodbye!");
+                try {
+                    if (connection) {
+                        leaving(serverQueue);
+                        message.channel.send("Okay! See you later");
+                        connection = voiceChannel.leave();
+                        return;
+                    } else {
+                        message.channel.send("I am not currently in a voice channel");
+                    }
+                } catch (err) {
+                    message.channel.send("ERROR: Please try again");
+                    console.log(err);
+                    return message.channel.send(err);
+                }
                 return;
             } else {
                 try {
@@ -118,10 +146,22 @@ client.on('message', async message => {
         if (!client.voice.connections.find(i => i.channel.id === message.member.voice.channel.id)) {
             if (playing) {
                 message.channel.send("I can only play music in one channel at a time!")
+                return;
             } else {
-                message.channel.send("Please run !join to allow me in your voice channel.");
+                const voiceChannel = message.member.voice.channel;
+                const permissions = voiceChannel.permissionsFor(message.client.user);
+                if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
+                    message.channel.send("I need the permissions to join and speak in your voice channel!");
+                    return;
+                }
+                try {
+                    connection = await voiceChannel.join();
+                } catch (err) {
+                    console.log(err);
+                    return message.channel.send(err);
+                }
             }
-            return;
+            
         }
         addSongs(message, serverQueue);
         return;
@@ -339,6 +379,12 @@ function skip(serverQueue) {
         return;
     } else {
         dispatcher.end();
+        dispatcher.resume();
+        dispatcher.pause();
+        if (!dispatcher.paused) {
+            dispatcher.pause();
+            playing = false;
+        }
         return;
     }
 }
