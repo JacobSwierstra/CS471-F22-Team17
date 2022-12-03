@@ -379,12 +379,8 @@ function skip(serverQueue) {
         return;
     } else {
         dispatcher.end();
-        dispatcher.resume();
         dispatcher.pause();
-        if (!dispatcher.paused) {
-            dispatcher.pause();
-            playing = false;
-        }
+        dispatcher.resume();
         return;
     }
 }
