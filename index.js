@@ -230,6 +230,9 @@ client.on('message', async message => {
         } else if (serverQueue == null || serverQueue.songs == null || serverQueue.songs.length < 2) {
             /* prints if any elements of the serverQueue are null or songs only contains the current playing song */
             message.channel.send("Queue is empty! No songs to shuffle!");
+        } else {
+            shuffle(serverQueue);
+            message.channel.send("Queue shuffled!");
         }
      }
 
@@ -398,6 +401,19 @@ function pause(guild, message) {
             playing = false;
             return message.channel.send("Music paused!");
         }
+    }
+}
+
+//shuffle function
+function shuffle(serverQueue) {
+    if (serverQueue.songs.length > 2) {
+        for (let i = serverQueue.songs.length - 1; i > 1; i--) {
+            const j = 1 + Math.floor(Math.random() * i);
+            [serverQueue.songs[i], serverQueue.songs[j]] = [serverQueue.songs[j], serverQueue.songs[i]];
+        }
+        return;
+    } else {
+        return;
     }
 }
 
